@@ -21,8 +21,13 @@ if not exist "dist\spa" (
 echo 📦 Deploying to GitHub Pages...
 echo.
 
-REM Deploy using gh-pages
-call npx gh-pages -d dist/spa -t
+REM Clean gh-pages cache first
+echo 🧹 Cleaning gh-pages cache...
+call npx gh-pages-clean
+
+REM Deploy using gh-pages with force push to overwrite everything
+echo 🚀 Force pushing new build...
+call npx gh-pages -d dist/spa -t -f
 
 if %errorlevel% neq 0 (
     echo.
