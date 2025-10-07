@@ -4,7 +4,8 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: '/Heroes-web/',
+  // Use root path for custom domain, subdirectory for GitHub Pages
+  base: process.env.GITHUB_PAGES_CUSTOM_DOMAIN === 'true' ? '/' : '/Heroes-web/',
   server: {
     host: "::",
     port: 8080,
