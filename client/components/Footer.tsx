@@ -8,6 +8,7 @@ import {
   Instagram,
   Linkedin,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import AdminFooter from "./AdminFooter";
 
@@ -74,44 +75,44 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li>
-                <a
-                  href="/about"
+                <Link
+                  to="/about"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/loans"
+                <Link
+                  to="/loans"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   Loan Products
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/savings"
+                <Link
+                  to="/savings"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   Savings Plans
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/services"
+                <Link
+                  to="/services"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   Our Services
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/membership"
+                <Link
+                  to="/membership"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   Membership
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -196,24 +197,24 @@ export default function Footer() {
               © 2024 Heroes SACCO. All rights reserved. Licensed by SASRA.
             </div>
             <div className="flex space-x-6 text-sm">
-              <a
-                href="/privacy"
+              <Link
+                to="/privacy"
                 className="text-gray-400 hover:text-white transition-colors"
               >
                 Privacy Policy
-              </a>
-              <a
-                href="/terms"
+              </Link>
+              <Link
+                to="/terms"
                 className="text-gray-400 hover:text-white transition-colors"
               >
                 Terms of Service
-              </a>
-              <a
-                href="/cookies"
+              </Link>
+              <Link
+                to="/cookies"
                 className="text-gray-400 hover:text-white transition-colors"
               >
                 Cookie Policy
-              </a>
+              </Link>
             </div>
           </div>
         </div>
