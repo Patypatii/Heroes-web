@@ -23,6 +23,10 @@ echo "📦 Preparing deployment files..."
 # Copy all files from dist/spa to root
 cp -r dist/spa/* .
 
+# Copy GitHub Pages specific files
+cp public/404.html .
+cp public/.nojekyll .
+
 # Add all files to git
 git add .
 
@@ -40,4 +44,7 @@ echo "5. Select 'main' branch and '/ (root)' folder"
 echo "6. Your site will be available at: https://patypatii.github.io/"
 echo ""
 echo "🔗 Repository URL: https://github.com/patypatii/your-repo-name"
+
+
+
 

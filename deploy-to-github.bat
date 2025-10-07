@@ -20,6 +20,10 @@ echo 📦 Preparing deployment files...
 REM Copy all files from dist/spa to root
 xcopy /E /Y "dist\spa\*" "."
 
+REM Copy GitHub Pages specific files
+copy "public\404.html" "."
+copy "public\.nojekyll" "."
+
 REM Add all files to git
 git add .
 
@@ -38,4 +42,7 @@ echo 6. Your site will be available at: https://patypatii.github.io/
 echo.
 echo 🔗 Repository URL: https://github.com/patypatii/your-repo-name
 pause
+
+
+
 
