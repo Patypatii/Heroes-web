@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 import {
   Dialog,
   DialogContent,
@@ -31,6 +32,7 @@ import {
 
 export default function Index() {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [contactOpen, setContactOpen] = useState(false);
 
   const [loanType, setLoanType] = useState("personal");
@@ -48,6 +50,22 @@ export default function Index() {
       (Math.pow(1 + monthlyRate, months) - 1);
     return payment;
   }, [amount, term, loanType]);
+
+  const handleDownloadAPK = () => {
+    // Show toast notification
+    toast({
+      title: "Download Started",
+      description: "The app is coming soon to Google Play Store. For now, you can download the APK directly.",
+    });
+
+    // Trigger download
+    const link = document.createElement('a');
+    link.href = '/Heroes MF.apk';
+    link.download = 'Heroes-MF.apk';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const features = [
     {
@@ -382,18 +400,16 @@ export default function Index() {
                 repayments, and manage your savings on the go.
               </p>
               <div className="flex flex-wrap gap-4">
-                <a
-                  href="https://play.google.com/store/search?q=Heroes%20SACCO%20Loan&c=apps"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-3 bg-black text-white px-5 py-3 rounded-xl hover:opacity-90"
+                <button
+                  onClick={handleDownloadAPK}
+                  className="inline-flex items-center gap-3 bg-black text-white px-5 py-3 rounded-xl hover:opacity-90 transition-opacity"
                 >
                   <Smartphone className="h-6 w-6" />
                   <div className="text-left">
-                    <div className="text-xs">GET IT ON</div>
-                    <div className="text-base font-semibold">Google Play</div>
+                    <div className="text-xs">DOWNLOAD APK</div>
+                    <div className="text-base font-semibold">Android App</div>
                   </div>
-                </a>
+                </button>
                 <div className="inline-flex items-center gap-3 bg-gray-200 text-gray-600 px-5 py-3 rounded-xl cursor-not-allowed">
                   <Smartphone className="h-6 w-6" />
                   <div className="text-left">

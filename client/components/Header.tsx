@@ -4,12 +4,14 @@ import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import ProfileDropdown from "./ProfileDropdown";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, logout, isLoading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const { toast } = useToast();
 
   console.log("🔍 Header - Auth state:", { user, isLoading, userRole: user?.role });
   console.log("🔍 Header - User object:", user);
@@ -19,6 +21,22 @@ export default function Header() {
 
   // Show navigation for admin users only when they're NOT on admin pages
   const shouldShowNavigation = !user || !(user.role === "admin" || user.role === "staff") || !isAdminPage;
+
+  const handleDownloadAPK = () => {
+    // Show toast notification
+    toast({
+      title: "Download Started",
+      description: "The app is coming soon to Google Play Store. For now, you can download the APK directly.",
+    });
+
+    // Trigger download
+    const link = document.createElement('a');
+    link.href = '/Heroes MF.apk';
+    link.download = 'Heroes-MF.apk';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   // Don't render anything while loading
   if (isLoading) {
@@ -191,8 +209,8 @@ export default function Header() {
                   <ProfileDropdown />
                 </>
               )}
-              <Button className="bg-primary-600 hover:bg-primary-700" onClick={() => (window.location.href = "/#get-app")}>
-                Get it
+              <Button className="bg-primary-600 hover:bg-primary-700" onClick={handleDownloadAPK}>
+                Download App
               </Button>
             </div>
           )}

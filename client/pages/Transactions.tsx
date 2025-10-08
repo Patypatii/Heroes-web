@@ -76,8 +76,12 @@ export default function Transactions() {
             console.log('Transactions response:', transactionsResponse);
             console.log('Summary response:', summaryResponse);
 
+            // Extract data from response (backend wraps it in { success, data, message })
+            const transactionsData = transactionsResponse?.data || transactionsResponse || [];
+            console.log('Extracted transactions data:', transactionsData);
+
             // Transform backend transaction format to frontend format
-            const transformedTransactions = (transactionsResponse || []).map((txn: any) => ({
+            const transformedTransactions = transactionsData.map((txn: any) => ({
                 id: txn.id,
                 title: txn.title,
                 description: txn.description,
