@@ -75,7 +75,21 @@ export default function Transactions() {
             ]);
             console.log('Transactions response:', transactionsResponse);
             console.log('Summary response:', summaryResponse);
-            setTransactions(transactionsResponse || []);
+
+            // Transform backend transaction format to frontend format
+            const transformedTransactions = (transactionsResponse || []).map((txn: any) => ({
+                id: txn.id,
+                title: txn.title,
+                description: txn.description,
+                amount: Math.abs(parseFloat(txn.amount)),
+                type: mapTransactionType(txn.transaction_type, txn.category),
+                status: txn.status?.toLowerCase() || 'pending',
+                category: txn.category || '',
+                date: txn.created_at || txn.transaction_date,
+                reference: txn.mpesa_receipt_number || txn.reference_number,
+            }));
+
+            setTransactions(transformedTransactions);
             setSummary(summaryResponse);
             console.log('Summary state set to:', summaryResponse);
         } catch (error: any) {
@@ -87,6 +101,33 @@ export default function Transactions() {
             });
         } finally {
             setLoading(false);
+        }
+    };
+
+    // Helper function to map transaction_type to display type
+    const mapTransactionType = (transactionType: string, category?: string): "deposit" | "withdrawal" | "loan" | "repayment" | "interest" | "fee" => {
+        switch (transactionType) {
+            case 'deposit':
+            case 'manual_deposit':
+            case 'savings_deposit':
+                return 'deposit';
+            case 'withdrawal':
+            case 'manual_withdrawal':
+            case 'savings_withdrawal':
+                return 'withdrawal';
+            case 'loan_disbursement':
+                return 'loan';
+            case 'loan_repayment':
+                return 'repayment';
+            case 'interest':
+                return 'interest';
+            case 'fee':
+                return 'fee';
+            default:
+                // Fallback to category if available
+                if (category === 'deposit') return 'deposit';
+                if (category === 'withdrawal') return 'withdrawal';
+                return 'deposit';
         }
     };
 
