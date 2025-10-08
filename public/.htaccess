@@ -1,0 +1,91 @@
+# Heroes MF - Apache Configuration
+# Fix MIME types and enable SPA routing
+
+# Enable rewrite engine
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Don't rewrite files or directories that exist
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  
+  # Rewrite all other URLs to index.html for SPA routing
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# Set correct MIME types
+<IfModule mod_mime.c>
+  # JavaScript
+  AddType application/javascript .js .mjs
+  AddType text/javascript .js
+  
+  # CSS
+  AddType text/css .css
+  
+  # JSON
+  AddType application/json .json
+  
+  # Web Manifest
+  AddType application/manifest+json .webmanifest
+  
+  # APK files
+  AddType application/vnd.android.package-archive .apk
+  
+  # Images
+  AddType image/png .png
+  AddType image/jpeg .jpg .jpeg
+  AddType image/svg+xml .svg
+  AddType image/x-icon .ico
+  AddType image/webp .webp
+</IfModule>
+
+# Force download for APK files
+<FilesMatch "\.(apk)$">
+  Header set Content-Disposition "attachment"
+  Header set Content-Type "application/vnd.android.package-archive"
+</FilesMatch>
+
+# Security headers
+<IfModule mod_headers.c>
+  # Prevent MIME type sniffing
+  Header set X-Content-Type-Options "nosniff"
+  
+  # Enable XSS protection
+  Header set X-XSS-Protection "1; mode=block"
+  
+  # Prevent clickjacking
+  Header set X-Frame-Options "DENY"
+  
+  # HTTPS enforcement (optional, uncomment if using HTTPS)
+  # Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</IfModule>
+
+# Compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css
+  AddOutputFilterByType DEFLATE application/javascript text/javascript
+  AddOutputFilterByType DEFLATE application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# Cache control
+<IfModule mod_expires.c>
+  ExpiresActive On
+  
+  # Images
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+  
+  # CSS and JavaScript
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  
+  # APK - no cache (so users always get latest version)
+  ExpiresByType application/vnd.android.package-archive "access plus 0 seconds"
+  
+  # HTML - no cache
+  ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+

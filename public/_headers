@@ -1,0 +1,46 @@
+# MIME type headers for GitHub Pages / Netlify / Static Hosting
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
+
+# JavaScript modules
+/assets/*.js
+  Content-Type: application/javascript; charset=utf-8
+
+# CSS files
+/assets/*.css
+  Content-Type: text/css; charset=utf-8
+
+# JSON files
+*.json
+  Content-Type: application/json; charset=utf-8
+
+# Manifest
+/site.webmanifest
+  Content-Type: application/manifest+json; charset=utf-8
+
+# APK file
+/Heroes*.apk
+  Content-Type: application/vnd.android.package-archive
+  Content-Disposition: attachment
+
+# Images
+*.png
+  Content-Type: image/png
+
+*.jpg
+  Content-Type: image/jpeg
+
+*.jpeg
+  Content-Type: image/jpeg
+
+*.svg
+  Content-Type: image/svg+xml
+
+*.ico
+  Content-Type: image/x-icon
+
+*.webp
+  Content-Type: image/webp
+
